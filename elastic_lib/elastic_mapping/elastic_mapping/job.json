@@ -1,0 +1,1462 @@
+{
+    "job": {
+        "dynamic": "strict",
+        "properties": {
+            "id": {
+                "type": "keyword"
+            },
+            "did_you_mean": {
+                "type": "text",
+                "analyzer": "did_you_mean"
+            },
+            "business_classification": {
+                "type": "keyword"
+            },
+            "title": {
+                "type": "text",
+                "analyzer": "search_index",
+                "copy_to": [
+                    "did_you_mean"
+                ]
+            },
+            "tags": {
+                "type": "text"
+            },
+            "salary_type": {
+                "type": "text"
+            },
+            "application_process": {
+                "type": "keyword"
+            },
+            "job_group": {
+                "type": "keyword"
+            },
+            "description": {
+                "type": "text"
+            },
+            "hiring_org_name": {
+                "type": "text"
+            },
+            "description_text": {
+                "type": "text",
+                "analyzer": "search_index",
+                "copy_to": [
+                    "did_you_mean"
+                ]
+            },
+            "slug": {
+                "type": "keyword"
+            },
+            "summary": {
+                "type": "text"
+            },
+            "completion_score": {
+                "type": "integer"
+            },
+            "contact_unlocks_left": {
+                "type": "integer"
+            },
+            "vacancies": {
+                "type": "integer"
+            },
+            "employer_response_time": {
+                "type": "integer"
+            },
+            "screen_response_time": {
+                "type": "integer"
+            },
+            "share_contact_to_public": {
+                "type": "boolean"
+            },
+            "employment_type": {
+                "type": "keyword"
+            },
+            "working_days_info": {
+                "properties": {
+                    "days": {
+                        "type": "integer"
+                    },
+                    "offs": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "views_count": {
+                "properties": {
+                    "candidate": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "contract_type": {
+                "type": "keyword"
+            },
+            "state": {
+                "type": "keyword"
+            },
+            "stage": {
+                "type": "keyword"
+            },
+            "is_pricing_data_editable": {
+                "type": "boolean"
+            },
+            "branch_link": {
+                "type": "keyword"
+            },
+            "sample_resume": {
+                "type": "text"
+            },
+            "created": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "modified": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "opened_on": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "approved_on": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "is_auto_approved": {
+                "type": "boolean"
+            },
+            "is_version_approved": {
+                "type": "boolean"
+            },
+            "rejected_on": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "closed_on": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "paused_on": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "last_activity_on": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "due_date": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "is_resume_subscribed": {
+                "type": "boolean"
+            },
+            "client_approval_required": {
+                "type": "boolean"
+            },
+            "last_indexed_on": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "pricing_plan_type": {
+                "type": "keyword"
+            },
+            "audio_jd": {
+                "type": "keyword"
+            },
+            "video_jd": {
+                "type": "keyword"
+            },
+            "emp_stated_interview_cost": {
+                "type": "float"
+            },
+            "emp_stated_closure_cost": {
+                "type": "float"
+            },
+            "is_dormant": {
+                "type": "boolean"
+            },
+            "point_of_contacts": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "first_name": {
+                                "type": "text"
+                            },
+                            "last_name": {
+                                "type": "text"
+                            }
+                        }
+                    }
+                }
+            },
+            "functional_area": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "text",
+                        "analyzer": "search_index",
+                        "copy_to": [
+                            "did_you_mean"
+                        ]
+                    },
+                    "category": {
+                        "type": "text"
+                    },
+                    "featured_for_jp_plan": {
+                        "type": "boolean"
+                    },
+                    "full_image": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "organization": {
+                "properties": {
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "name": {
+                        "type": "text",
+                        "analyzer": "search_index",
+                        "copy_to": ["did_you_mean"],
+                        "fields": {
+                            "raw": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "slug": {
+                        "type": "keyword"
+                    },
+                    "rc_rating": {
+                        "type": "float"
+                    },
+                    "popular_name": {
+                        "type": "text",
+                        "analyzer": "search_index",
+                        "copy_to": [
+                            "did_you_mean"
+                        ],
+                        "fields": {
+                            "raw": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "website": {
+                        "type": "keyword"
+                    },
+                    "type": {
+                        "type": "keyword"
+                    },
+                    "business_classification": {
+                        "type": "keyword"
+                    },
+                    "logo": {
+                        "type": "keyword"
+                    },
+                    "description": {
+                        "type": "text"
+                    },
+                    "employee_count": {
+                        "type": "long"
+                    },
+                    "video": {
+                        "type": "keyword"
+                    },
+                    "associated_cse": {
+                        "properties": {
+                            "id": {
+                                "type": "long"
+                            },
+                            "user": {
+                                "properties": {
+                                    "id": {
+                                        "type": "keyword"
+                                    },
+                                    "first_name": {
+                                        "type": "text"
+                                    },
+                                    "last_name": {
+                                        "type": "text"
+                                    },
+                                    "user_type": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "associated_sales_person": {
+                        "properties": {
+                            "id": {"type": "integer"},
+                            "name": {"type": "text"},
+                            "user_id": {"type": "keyword"}
+                        }
+                    },
+                    "industry": {
+                        "properties": {
+                            "id": {
+                                "type": "text"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "search_index",
+                                "copy_to": [
+                                    "did_you_mean"
+                                ],
+                                "fields": {
+                                    "raw": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "org_pricing_stats": {
+                        "properties": {
+                            "total_job_postings_bought": {
+                                "type": "long"
+                            },
+                            "remaining_job_posting_credits": {
+                                "type": "long"
+                            },
+                            "free_jobs_count": {
+                                "type": "long"
+                            },
+                            "max_allowed_free_jobs": {
+                                "type": "long"
+                            },
+                            "job_posting_validity_expiry": {
+                                "type": "date",
+                                "format": "date_optional_time"
+                            }
+                        }
+                    },
+                    "balance_enum": {
+                        "type": "integer"
+                    },
+                    "is_hr_agency": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "created_by": {
+                "properties": {
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "first_name": {
+                        "type": "text"
+                    },
+                    "last_name": {
+                        "type": "text"
+                    },
+                    "user_type": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "places": {
+                "properties": {
+                    "place_id": {
+                        "type": "keyword"
+                    },
+                    "short_formatted_address": {
+                        "type": "text"
+                    },
+                    "formatted_address": {
+                        "type": "text"
+                    },
+                    "location": {
+                        "type": "geo_point"
+                    },
+                    "geohash": {
+                        "type": "geo_point"
+                    },
+                    "geohash_text": {
+                        "type": "keyword"
+                    },
+                    "regions": {
+                        "type": "keyword"
+                    },
+                    "hierarchy": {
+                        "type": "nested",
+                        "include_in_parent": true,
+                        "properties": {
+                            "location": {
+                                "type": "geo_point"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    }
+                }
+            },
+            "shifts": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "keyword"
+                    },
+                    "work_start_time": {
+                        "type": "date",
+                        "format": "hour_minute_second"
+                    },
+                    "work_end_time": {
+                        "type": "date",
+                        "format": "hour_minute_second"
+                    },
+                    "post_break_start_time": {
+                        "type": "date",
+                        "format": "hour_minute_second"
+                    },
+                    "post_break_end_time": {
+                        "type": "date",
+                        "format": "hour_minute_second"
+                    },
+                    "male_only": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "expectation": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "gender_preference": {
+                        "type": "keyword"
+                    },
+                    "min_experience": {
+                        "type": "integer"
+                    },
+                    "max_experience": {
+                        "type": "integer"
+                    },
+                    "min_fa_experience": {
+                        "type": "integer"
+                    },
+                    "proficiency_level": {
+                        "type": "integer"
+                    },
+                    "is_proficiency_level_mandatory": {
+                        "type": "boolean"
+                    },
+                    "min_preferred_age": {
+                        "type": "integer"
+                    },
+                    "max_preferred_age": {
+                        "type": "integer"
+                    },
+                    "normalised_age_preference": {
+                        "properties": {
+                            "max": {
+                                "type": "long"
+                            },
+                            "min": {
+                                "type": "long"
+                            }
+                        }
+                    },
+                    "skills": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "search_index",
+                                "copy_to": [
+                                    "did_you_mean"
+                                ]
+                            }
+                        }
+                    },
+                    "preferred_skills": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "search_index"
+                            }
+                        }
+                    },
+                    "degrees": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "search_index"
+                            }
+                        }
+                    },
+                    "specializations": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "search_index"
+                            }
+                        }
+                    },
+                    "is_gender_pref_mandatory": {
+                        "type": "boolean"
+                    },
+                    "is_age_pref_mandatory": {
+                        "type": "boolean"
+                    },
+                    "is_expected_salary_required": {
+                        "type": "boolean"
+                    },
+                    "is_notice_period_required": {
+                        "type": "boolean"
+                    },
+                    "notice_period": {
+                        "type": "integer"
+                    },
+                    "mobile_ownership": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            },
+                            "priority": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "is_mobile_ownership_mandatory": {
+                        "type": "boolean"
+                    },
+                    "vehicle_ownership": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "is_vehicle_ownership_mandatory": {
+                        "type": "boolean"
+                    },
+                    "document_ownership": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            },
+                            "is_mandatory": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "laptop_required": {
+                        "type": "boolean"
+                    },
+                    "is_laptop_requirement_mandatory": {
+                        "type": "boolean"
+                    },
+                    "misc_requirements": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "text": {
+                                "type": "text"
+                            },
+                            "is_required": {
+                                "type": "boolean"
+                            },
+                            "type": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "work_exp_requirements": {
+                        "properties": {
+                            "min_experience": {
+                                "type": "integer"
+                            },
+                            "functional_areas": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                }
+                            },
+                            "is_experience_mandatory": {
+                                "type": "boolean"
+                            },
+                            "industries": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                }
+                            },
+                            "is_industries_mandatory": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "degree_requirements": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "degree": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                }
+                            },
+                            "is_degree_mandatory": {
+                                "type": "boolean"
+                            },
+                            "specializations": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                }
+                            },
+                            "is_specializations_mandatory": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                }
+            },
+            "offer": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "contract_period": {
+                        "type": "integer"
+                    },
+                    "salary_details": {
+                        "properties": {
+                            "min_salary": {
+                                "type": "integer"
+                            },
+                            "max_salary": {
+                                "type": "integer"
+                            },
+                            "variable_pay": {
+                                "type": "boolean"
+                            },
+                            "travel_allowance": {
+                                "type": "boolean"
+                            },
+                            "pf_esic": {
+                                "type": "boolean"
+                            },
+                            "salary_slab": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "calculated_ctc": {
+                        "type": "float"
+                    },
+                    "salary_format": {
+                        "type": "integer"
+                    },
+                    "min_offered_salary": {
+                        "type": "long"
+                    },
+                    "max_offered_salary": {
+                        "type": "long"
+                    },
+                    "normalized_min_salary": {
+                        "type": "long"
+                    }
+                }
+            },
+            "reason": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "reason": {
+                        "type": "text"
+                    }
+                }
+            },
+            "checklist": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "query": {
+                        "type": "text"
+                    },
+                    "is_required": {
+                        "type": "boolean"
+                    },
+                    "type": {
+                        "type": "text"
+                    }
+                }
+            },
+            "partner_incentives": {
+                "properties": {
+                    "sourcing": {
+                        "properties": {
+                            "bronze": {
+                                "type": "float"
+                            },
+                            "silver": {
+                                "type": "float"
+                            },
+                            "gold": {
+                                "type": "float"
+                            },
+                            "platinum": {
+                                "type": "float"
+                            }
+                        }
+                    },
+                    "interview": {
+                        "properties": {
+                            "bronze": {
+                                "type": "float"
+                            },
+                            "silver": {
+                                "type": "float"
+                            },
+                            "gold": {
+                                "type": "float"
+                            },
+                            "platinum": {
+                                "type": "float"
+                            }
+                        }
+                    },
+                    "selection": {
+                        "properties": {
+                            "bronze": {
+                                "type": "float"
+                            },
+                            "silver": {
+                                "type": "float"
+                            },
+                            "gold": {
+                                "type": "float"
+                            },
+                            "platinum": {
+                                "type": "float"
+                            }
+                        }
+                    },
+                    "closure": {
+                        "properties": {
+                            "salary_wise_closure_price": {
+                                "properties": {
+                                    "bronze": {
+                                        "type": "float"
+                                    },
+                                    "silver": {
+                                        "type": "float"
+                                    },
+                                    "gold": {
+                                        "type": "float"
+                                    },
+                                    "platinum": {
+                                        "type": "float"
+                                    },
+                                    "bronze_perc": {
+                                        "type": "float"
+                                    },
+                                    "silver_perc": {
+                                        "type": "float"
+                                    },
+                                    "gold_perc": {
+                                        "type": "float"
+                                    },
+                                    "platinum_perc": {
+                                        "type": "float"
+                                    },
+                                    "price_measure_type": {
+                                        "type": "keyword"
+                                    },
+                                    "slab_id": {
+                                        "type": "integer"
+                                    },
+                                    "salary_slab": {
+                                        "properties": {
+                                            "lower": {
+                                                "type": "integer"
+                                            },
+                                            "upper": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "closure_steps": {
+                                "properties": {
+                                    "step_number": {
+                                        "type": "integer"
+                                    },
+                                    "amount_percentage": {
+                                        "type": "float"
+                                    },
+                                    "closure_days": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "number_of_replacements": {
+                                "type": "integer"
+                            },
+                            "guarantee_period": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "is_default_pricing": {
+                        "type": "boolean"
+                    },
+                    "version_number": {
+                        "type": "integer"
+                    },
+                    "is_new_request_raised": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "client_postpaid_pricing": {
+                "properties": {
+                    "pricing_plan_type": {
+                        "type": "keyword"
+                    },
+                    "closure": {
+                        "properties": {
+                            "required_closure_count": {
+                                "type": "integer"
+                            },
+                            "employer_guarantee_period": {
+                                "type": "integer"
+                            },
+                            "number_of_replacements": {
+                                "type": "integer"
+                            },
+                            "closure_steps": {
+                                "properties": {
+                                    "step_number": {
+                                        "type": "integer"
+                                    },
+                                    "amount_percentage": {
+                                        "type": "float"
+                                    },
+                                    "closure_days": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "salary_wise_closure_price": {
+                                "properties": {
+                                    "slab_id": {
+                                        "type": "integer"
+                                    },
+                                    "salary_slab": {
+                                        "properties": {
+                                            "lower": {
+                                                "type": "integer"
+                                            },
+                                            "upper": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "price_measure_type": {
+                                        "type": "keyword"
+                                    },
+                                    "flat_price_per_candidate": {
+                                        "type": "float"
+                                    },
+                                    "percent_price_per_candidate": {
+                                        "type": "float"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "invoice_generated_after": {
+                        "type": "integer"
+                    },
+                    "invoice_clearance_after": {
+                        "type": "integer"
+                    },
+                    "advance_amount": {
+                        "type": "float"
+                    },
+                    "management_fee": {
+                        "properties": {
+                            "price_measure_type": {
+                                "type": "keyword"
+                            },
+                            "amount": {
+                                "type": "float"
+                            }
+                        }
+                    },
+                    "is_eligible_for_ledger": {
+                        "type": "boolean"
+                    },
+                    "comment": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "client_prepaid_pricing": {
+                "properties": {
+                    "pricing_plan_type": {
+                        "type": "keyword"
+                    },
+                    "interview": {
+                        "properties": {
+                            "credits_per_interview": {
+                                "type": "float"
+                            },
+                            "valid_interviews_count": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "selection": {
+                        "properties": {
+                            "credits_per_selection": {
+                                "type": "float"
+                            },
+                            "required_selection_count": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "closure": {
+                        "properties": {
+                            "required_closure_count": {
+                                "type": "integer"
+                            },
+                            "employer_guarantee_period": {
+                                "type": "integer"
+                            },
+                            "number_of_replacements": {
+                                "type": "integer"
+                            },
+                            "closure_steps": {
+                                "properties": {
+                                    "step_number": {
+                                        "type": "integer"
+                                    },
+                                    "amount_percentage": {
+                                        "type": "float"
+                                    },
+                                    "closure_days": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "salary_wise_closure_price": {
+                                "properties": {
+                                    "slab_id": {
+                                        "type": "integer"
+                                    },
+                                    "salary_slab": {
+                                        "properties": {
+                                            "lower": {
+                                                "type": "integer"
+                                            },
+                                            "upper": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    },
+                                    "price_measure_type": {
+                                        "type": "keyword"
+                                    },
+                                    "flat_price_per_candidate": {
+                                        "type": "float"
+                                    },
+                                    "percent_price_per_candidate": {
+                                        "type": "float"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "comment": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "language_preferences": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "language": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "search_index"
+                            }
+                        }
+                    },
+                    "proficiency": {
+                        "type": "integer"
+                    },
+                    "preference": {
+                        "type": "integer"
+                    },
+                    "modes": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "benefits": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "pf": {
+                        "type": "boolean"
+                    },
+                    "incentive": {
+                        "type": "boolean"
+                    },
+                    "incentive_description": {
+                        "type": "text"
+                    },
+                    "mobile_reimbursements": {
+                        "type": "boolean"
+                    },
+                    "mobile_reimbursements_details": {
+                        "type": "text"
+                    },
+                    "travel_reimbursements": {
+                        "type": "boolean"
+                    },
+                    "travel_reimbursements_details": {
+                        "type": "text"
+                    },
+                    "other_reimbursements": {
+                        "type": "boolean"
+                    },
+                    "other_reimbursements_details": {
+                        "type": "text"
+                    }
+                }
+            },
+            "partner_visibility": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "visibility": {
+                        "type": "integer"
+                    },
+                    "agency_ids": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "associated_cse": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "first_name": {
+                                "type": "text"
+                            },
+                            "last_name": {
+                                "type": "text"
+                            },
+                            "email": {
+                                "type": "text"
+                            },
+                            "mobile": {
+                                "type": "text"
+                            },
+                            "photo": {
+                                "type": "text"
+                            }
+                        }
+                    }
+                }
+            },
+            "associated_schedulers": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    }
+                }
+            },
+            "associated_partner_pocs": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    }
+                }
+            },
+            "max_interview_rounds": {
+                "type": "integer"
+            },
+            "number_of_partner_quotes": {
+                "type": "integer"
+            },
+            "number_of_ss_partner_quotes": {
+                "type": "integer"
+            },
+            "call_poc": {
+                "properties": {
+                    "name": {
+                        "type": "text"
+                    },
+                    "contact": {
+                        "type": "text"
+                    }
+                }
+            },
+            "applications_narration_stats": {
+                "properties": {
+                    "total_count": {
+                        "type": "integer"
+                    },
+                    "raised_count": {
+                        "type": "integer"
+                    },
+                    "resolved_count": {
+                        "type": "integer"
+                    },
+                    "partner": {
+                        "properties": {
+                            "total": {
+                                "type": "integer"
+                            },
+                            "raised": {
+                                "type": "integer"
+                            },
+                            "resolved": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "employer": {
+                        "properties": {
+                            "total": {
+                                "type": "integer"
+                            },
+                            "raised": {
+                                "type": "integer"
+                            },
+                            "resolved": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "primary_agency": {
+                        "properties": {
+                            "total": {
+                                "type": "integer"
+                            },
+                            "raised": {
+                                "type": "integer"
+                            },
+                            "resolved": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            },
+            "locations": {
+                "properties": {
+                    "place": {
+                        "properties": {
+                            "place_id": {
+                                "type": "keyword"
+                            },
+                            "short_formatted_address": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "vacancies": {
+                        "type": "long"
+                    },
+                    "is_visible": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "working_days": {
+                "properties": {
+                    "count": {
+                        "type": "integer"
+                    },
+                    "off_days": {
+                        "type": "integer"
+                    },
+                    "rotational_off": {
+                        "type": "boolean"
+                    },
+                    "comments": {
+                        "type": "text"
+                    }
+                }
+            },
+            "version_created_by": {
+                "properties": {
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "user_type": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "paused_reason": {
+                "type": "keyword"
+            },
+            "phone_screening_enabled": {
+                "type": "boolean"
+            },
+            "location_comment": {
+                "type": "keyword"
+            },
+            "recruitment_support": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "first_name": {
+                                "type": "text"
+                            },
+                            "last_name": {
+                                "type": "text"
+                            }
+                        }
+                    }
+                }
+            },
+            "scheduler_self_support": {
+                "type": "boolean"
+            },
+            "is_narration_mandatory": {
+                "type": "boolean"
+            },
+            "video_jds": {
+                "properties": {
+                    "name": {
+                        "type": "text"
+                    },
+                    "id": {
+                      "type": "keyword"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    },
+                    "modified_by": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "first_name": {
+                                "type": "text"
+                            },
+                            "last_name": {
+                                "type": "text"
+                            },
+                            "user_type": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "stage": {
+                        "type":"keyword"
+                    },
+                    "approved_by": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "first_name": {
+                                "type": "text"
+                            },
+                            "last_name": {
+                                "type": "text"
+                            },
+                            "user_type": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "rejected_by": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "first_name": {
+                                "type": "text"
+                            },
+                            "last_name": {
+                                "type": "text"
+                            },
+                            "user_type": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "modified" :{
+                        "type": "date",
+                        "format": "date_optional_time"
+                    },
+                    "approved_on" :{
+                        "type": "date",
+                        "format": "date_optional_time"
+                    },
+                    "rejected_on" :{
+                        "type": "date",
+                        "format": "date_optional_time"
+                    },
+                    "reason": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "reason": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "comment": {
+                        "type":"text"
+                    }
+                }
+            },
+            "is_flagged": {
+                "type": "boolean"
+            },
+            "flagged_reason": {
+                "type": "object",
+                "dynamic": true
+            },
+            "mandatory_keywords": {
+                "type": "text",
+                "fields": {
+                    "raw": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "optional_keywords": {
+                "type": "text",
+                "fields": {
+                    "raw": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "is_downgraded": {
+                "type": "boolean"
+            },
+            "downgraded_on": {
+                "type": "date",
+                "format": "date_optional_time"
+            },
+            "associated_dses": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

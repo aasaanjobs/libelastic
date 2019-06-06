@@ -1,0 +1,947 @@
+{
+    "candidate": {
+        "dynamic": "strict",
+        "properties": {
+            "id": {
+                "type": "keyword"
+            },
+            "referral_account_id": {
+                "type": "text"
+            },
+            "referral_code": {
+                "type": "keyword"
+            },
+            "resume_template": {
+                "type": "text"
+            },
+            "lead_count": {
+                "type": "long"
+            },
+            "created": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+            },
+            "last_looking_for_job": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+            },
+            "last_active_on": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+            },
+            "linked_partners": {
+                "properties": {
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "name": {
+                        "type": "text"
+                    },
+                    "link_type": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "escrow_id": {
+                "type": "text"
+            },
+            "resume_content": {
+                "type": "text"
+            },
+            "current_salary": {
+                "type": "long"
+            },
+            "profiled_by_obj": {
+                "properties": {
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "first_name": {
+                        "type": "text"
+                    },
+                    "last_name": {
+                        "type": "text"
+                    },
+                    "user_type": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "educations": {
+                "properties": {
+                    "id": {
+                        "type": "long"
+                    },
+                    "institute": {
+                        "type": "text",
+                        "analyzer": "autocomplete"
+                    },
+                    "place": {
+                        "properties": {
+                            "location": {
+                                "type": "geo_point"
+                            },
+                            "place_id": {
+                                "type": "text"
+                            },
+                            "short_formatted_address": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "proficiency_level": {
+                        "type": "long"
+                    },
+                    "year_of_passing": {
+                        "type": "long"
+                    },
+                    "degree": {
+                        "type": "text",
+                        "analyzer": "autocomplete"
+                    },
+                    "stream": {
+                        "type": "text",
+                        "analyzer": "autocomplete"
+                    },
+                    "specialization": {
+                        "type": "text"
+                    }
+                }
+            },
+            "diplomas": {
+                "properties": {
+                    "id": {
+                        "type": "long"
+                    },
+                    "name": {
+                        "type": "text",
+                        "analyzer": "autocomplete"
+                    },
+                    "year_of_passing": {
+                        "type": "long"
+                    }
+                }
+            },
+            "functional_areas": {
+                "properties": {
+                    "id": {
+                        "type": "long"
+                    },
+                    "name": {
+                        "type": "text",
+                        "analyzer": "autocomplete"
+                    },
+                    "category": {
+                        "type": "text"
+                    }
+                }
+            },
+            "languages_known": {
+                "type": "text"
+            },
+            "ownership_skills": {
+                "type": "keyword"
+            },
+            "alternate_mobile": {
+                "type": "keyword"
+            },
+            "alternate_email": {
+                "type": "text"
+            },
+            "is_profile_visible": {
+                "type": "boolean"
+            },
+            "exclude_from_recommendation": {
+                "type": "boolean"
+            },
+            "is_lead_eligible": {
+                "type": "boolean"
+            },
+            "profile_completion": {
+                "type": "long"
+            },
+            "profile_invisible_from": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+            },
+            "profile_visible_from": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+            },
+            "is_profiled": {
+                "type": "boolean"
+            },
+            "is_self_registered": {
+                "type": "boolean"
+            },
+            "is_assessed": {
+                "type": "boolean"
+            },
+            "profiled_on": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+            },
+            "modified": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+            },
+            "interaction_status": {
+                "properties": {
+                    "status": {
+                        "type": "keyword"
+                    },
+                    "comment": {
+                        "type": "text"
+                    }
+                }
+            },
+            "source": {
+                "properties": {
+                    "id": {
+                        "type": "long"
+                    },
+                    "name": {
+                        "type": "text"
+                    },
+                    "type": {
+                        "type": "text"
+                    }
+                }
+            },
+            "assessed_on": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+            },
+            "availability": {
+                "type": "integer"
+            },
+            "profiled_by": {
+                "type": "keyword"
+            },
+            "is_experienced": {
+                "type": "boolean"
+            },
+            "is_looking_for_job": {
+                "type": "boolean"
+            },
+            "is_employed": {
+                "type": "boolean"
+            },
+            "show_referral_step": {
+                "type": "boolean"
+            },
+            "user": {
+                "properties": {
+                    "first_name": {
+                        "type": "text"
+                    },
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "created_by": {
+                        "type": "keyword"
+                    },
+                    "created_by_obj": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "first_name": {
+                                "type": "text"
+                            },
+                            "last_name": {
+                                "type": "text"
+                            },
+                            "user_type": {
+                                "type": "keyword"
+                            },
+                            "agency": {
+                                "properties": {
+                                    "id": {
+                                        "type": "keyword"
+                                    },
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "last_name": {
+                        "type": "text"
+                    },
+                    "preferred_language": {
+                        "type": "text"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "date_of_birth": {
+                        "type": "date",
+                        "format": "strict_date_optional_time||epoch_millis"
+                    },
+                    "gender": {
+                        "type": "keyword"
+                    },
+                    "mobile_verified": {
+                        "type": "boolean"
+                    },
+                    "mobile_verified_on": {
+                        "type": "date",
+                        "format": "strict_date_optional_time||epoch_millis"
+                    },
+                    "email_verified": {
+                        "type": "boolean"
+                    },
+                    "photo": {
+                        "type": "text"
+                    },
+                    "promo_sms_subscribed": {
+                        "type": "boolean"
+                    },
+                    "sms_subscribed": {
+                        "type": "boolean"
+                    },
+                    "promo_email_subscribed": {
+                        "type": "boolean"
+                    },
+                    "email_subscribed": {
+                        "type": "boolean"
+                    },
+                    "whatsapp_subscribed": {
+                        "type": "boolean"
+                    },
+                    "email_hash": {
+                        "type": "keyword"
+                    },
+                    "mobile_hash": {
+                        "type": "keyword"
+                    },
+                    "temp_mobile": {
+                        "type": "keyword"
+                    },
+                    "temp_email": {
+                        "type": "keyword"
+                    },
+                    "contact_unblocked": {
+                        "type": "boolean"
+                    },
+                    "tags": {
+                        "type": "text"
+                    },
+                    "aadhaar_id": {
+                        "type": "keyword"
+                    },
+                    "is_deleted": {
+                        "type": "boolean"
+                    },
+                    "marketing_source": {
+                        "properties": {
+                            "utm_source": {
+                                "type": "keyword"
+                            },
+                            "utm_medium": {
+                                "type": "keyword"
+                            },
+                            "utm_campaign": {
+                                "type": "keyword"
+                            },
+                            "http_referer": {
+                                "type": "keyword"
+                            },
+                            "utm_page": {
+                                "type": "keyword"
+                            },
+                            "agency_source": {
+                                "properties": {
+                                    "source": {
+                                        "type": "keyword"
+                                    },
+                                    "agency_id": {
+                                        "type": "keyword"
+                                    },
+                                    "job_id": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "is_mobile_dead": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "skill_ratings": {
+                "type": "nested",
+                "properties": {
+                    "id": {
+                        "type": "long"
+                    },
+                    "score": {
+                        "type": "long"
+                    },
+                    "skill": {
+                        "properties": {
+                            "id": {
+                                "type": "long"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "autocomplete"
+                            },
+                            "is_assessment_required": {
+                                "type": "boolean"
+                            },
+                            "assessment_type": {
+                                "type": "keyword"
+                            }
+                        }
+                    }
+                }
+            },
+            "assessment_interviews": {
+                "properties": {
+                    "id": {
+                        "type": "long"
+                    },
+                    "created_by": {
+                        "type": "keyword"
+                    },
+                    "attendance": {
+                        "type": "keyword"
+                    },
+                    "start_time": {
+                        "type": "date",
+                        "format": "strict_date_optional_time||epoch_millis"
+                    },
+                    "end_time": {
+                        "type": "date",
+                        "format": "strict_date_optional_time||epoch_millis"
+                    },
+                    "slot": {
+                        "properties": {
+                            "id": {
+                                "type": "long"
+                            },
+                            "start": {
+                                "type": "date",
+                                "format": "strict_date_optional_time||epoch_millis"
+                            },
+                            "end": {
+                                "type": "date",
+                                "format": "strict_date_optional_time||epoch_millis"
+                            },
+                            "office": {
+                                "type": "long"
+                            },
+                            "short_formatted_address": {
+                                "type": "text"
+                            },
+                            "agency": {
+                                "type": "keyword"
+                            }
+                        }
+                    }
+                }
+            },
+            "behavioral_status": {
+                "type": "keyword"
+            },
+            "skill_based_status": {
+                "type": "keyword"
+            },
+            "total_experience": {
+                "type": "long"
+            },
+            "total_experience_user": {
+                "type": "long"
+            },
+            "resume": {
+                "type": "keyword"
+            },
+            "resume_status": {
+                "type": "keyword"
+            },
+            "public_resume": {
+                "type": "keyword"
+            },
+            "skype_id": {
+                "type": "keyword"
+            },
+            "system_generated_resume": {
+                "type": "text"
+            },
+            "expectation": {
+                "properties": {
+                    "id": {
+                        "type": "long"
+                    },
+                    "max_salary": {
+                        "type": "long"
+                    },
+                    "min_salary": {
+                        "type": "long"
+                    },
+                    "preferred_locations": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            },
+                            "geohash": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "preferred_cities": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "contract_types": {
+                        "type": "keyword"
+                    },
+                    "job_types": {
+                        "type": "keyword"
+                    },
+                    "shifts": {
+                        "type": "integer"
+                    },
+                    "employment_types": {
+                        "type": "keyword"
+                    },
+                    "notice_period": {
+                        "type": "integer"
+                    },
+                    "is_notice_period_negotiable": {
+                        "type": "boolean"
+                    },
+                    "expected_salary": {
+                        "type": "long"
+                    },
+                    "ownerships": {
+                        "properties": {
+                            "id": {
+                                "type": "long"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    }
+                }
+            },
+            "address": {
+                "properties": {
+                    "address_text": {
+                        "type": "text"
+                    },
+                    "id": {
+                        "type": "long"
+                    },
+                    "pin_code": {
+                        "type": "text"
+                    },
+                    "place": {
+                        "properties": {
+                            "location": {
+                                "type": "geo_point"
+                            },
+                            "geohash": {
+                                "type": "geo_point"
+                            },
+                            "place_id": {
+                                "type": "text"
+                            },
+                            "short_formatted_address": {
+                                "type": "text"
+                            },
+                            "formatted_address": {
+                                "type": "text",
+                                "analyzer": "autocomplete"
+                            }
+                        }
+                    },
+                    "locality": {
+                        "properties": {
+                            "id": {
+                                "type": "long"
+                            },
+                            "name": {
+                                "type": "text"
+                            },
+                            "location": {
+                                "type": "geo_point"
+                            },
+                            "city": {
+                                "properties": {
+                                    "id": {
+                                        "type": "long"
+                                    },
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "last_location": {
+                "type": "geo_point"
+            },
+            "primary_experience": {
+                "properties": {
+                    "functional_area": {
+                        "properties": {
+                            "id": {
+                                "type": "long"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "autocomplete"
+                            },
+                            "category": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "id": {
+                        "type": "long"
+                    },
+                    "duration": {
+                        "type": "long"
+                    }
+                }
+            },
+            "work_experience": {
+                "properties": {
+                    "functional_area": {
+                        "properties": {
+                            "id": {
+                                "type": "long"
+                            },
+                            "name": {
+                                "type": "text",
+                                "analyzer": "autocomplete"
+                            },
+                            "category": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "industry": {
+                        "properties": {
+                            "id": {
+                                "type": "long"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "id": {
+                        "type": "long"
+                    },
+                    "job_title": {
+                        "type": "text",
+                        "analyzer": "autocomplete"
+                    },
+                    "reason_for_leaving": {
+                        "type": "text"
+                    },
+                    "salary_drawn": {
+                        "type": "long"
+                    },
+                    "started_from": {
+                        "type": "date",
+                        "format": "strict_date_optional_time||epoch_millis"
+                    },
+                    "till_now": {
+                        "type": "boolean"
+                    },
+                    "work_description": {
+                        "type": "text",
+                        "analyzer": "autocomplete"
+                    },
+                    "worked_till": {
+                        "type": "date",
+                        "format": "strict_date_optional_time||epoch_millis"
+                    },
+                    "company_name": {
+                        "type": "text",
+                        "analyzer": "autocomplete"
+                    }
+                }
+            },
+            "documents": {
+                "properties": {
+                    "id": {
+                        "type": "text"
+                    },
+                    "type": {
+                        "type": "text"
+                    },
+                    "data": {
+                        "type": "text"
+                    }
+                }
+            },
+            "location_tags": {
+                "properties": {
+                    "hierarchy": {
+                        "type": "nested",
+                        "include_in_parent": true,
+                        "properties": {
+                            "location": {
+                                "type": "geo_point"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "regions": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "call_interactions": {
+                "type": "nested",
+                "properties": {
+                    "agency_id": {
+                        "type": "keyword"
+                    },
+                    "status": {
+                        "type": "integer"
+                    },
+                    "comment": {
+                        "type": "text"
+                    },
+                    "modified": {
+                        "type": "date",
+                        "format": "strict_date_optional_time||epoch_millis"
+                    },
+                    "callback_at": {
+                        "type": "date",
+                        "format": "strict_date_optional_time||epoch_millis"
+                    },
+                    "modified_by": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "first_name": {
+                                "type": "text"
+                            },
+                            "last_name": {
+                                "type": "text"
+                            },
+                            "user_type": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "recorded_call": {
+                        "properties": {
+                            "audio_url": {
+                                "type": "keyword"
+                            },
+                            "length": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            },
+            "fa_experiences": {
+                "type": "nested",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "functional_area": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "experience": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "marital_status": {
+                "type": "keyword"
+            },
+            "ownership": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "documents": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "vehicles": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "mobile": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            },
+                            "priority": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "has_laptop": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "last_application_created_on": {
+                "properties": {
+                    "candidate": {
+                        "type": "date",
+                        "format": "strict_date_optional_time||epoch_millis"
+                    }
+                }
+            },
+            "languages": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "language": {
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "text"
+                            }
+                        }
+                    },
+                    "proficiency": {
+                        "type": "integer"
+                    },
+                    "modes": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "salary_info": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "current_salary": {
+                        "type": "long"
+                    },
+                    "current_salary_format": {
+                        "type": "integer"
+                    },
+                    "expected_salary": {
+                        "type": "long"
+                    },
+                    "expected_salary_format": {
+                        "type": "integer"
+                    },
+                    "normalized_current_salary": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "resume_uploaded_on": {
+                "type": "date",
+                "format": "strict_date_optional_time||epoch_millis"
+            },
+            "eligible_for_referral": {
+                "type": "bool11ean"
+            },
+            "is_staffing_employee": {
+                "type": "boolean"
+            },
+            "block_engagement": {
+                "type": "boolean"
+            },
+            "keywords": {
+                "type": "text",
+                "fields": {
+                    "raw": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "tags": {
+                "type": "keyword"
+            },
+            "last_call_status_details": {
+                "properties": {
+                    "callback_at": {
+                        "type": "date",
+                        "format": "date_optional_time"
+                    },
+                    "comment": {
+                        "type": "text"
+                    },
+                    "call_status": {
+                        "type": "integer"
+                    },
+                    "created_by": {
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "first_name": {
+                                "type": "text"
+                            },
+                            "last_name": {
+                                "type": "text"
+                            },
+                            "user_type": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "created": {
+                        "type": "text"
+                    }
+                }
+            },
+            "dse_notes": {
+                "type": "text"
+            }
+        }
+    }
+}
