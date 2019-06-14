@@ -104,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 ELASTIC_MAPPING_DETAILS = [
-
     {
         'alias': 'jobs_local',
         'doc_type': 'job',
@@ -116,8 +115,27 @@ ELASTIC_MAPPING_DETAILS = [
         'mapping_file': '/elastic_mapping/candidate.json',
 
     }
-
 ]
+
+LIB_ELASTIC = {
+    'HOST': 'http://localhost:9200',
+    'ENV': 'local',
+    'INDICES': {
+        'Candidate': {
+            'index_prefix': 'candidates',
+            'doc_type': 'candidate',
+            'mapping_file': '/elastic_mapping/candidate.json',
+            'retrievers': {
+                'single': 'candidate.pg_functions.get_candidate_data',
+                'multi': 'candidate.pg_functions.list_candidate_data'
+            },
+            'parent': {
+                'routing_key': 'job_id',
+                'doc_type': 'job'
+            }
+        }
+    }
+}
 
 ELASTIC_HOST_DETAILS = 'http://localhost:9200'
 

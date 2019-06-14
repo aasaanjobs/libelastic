@@ -887,7 +887,7 @@
                 "format": "strict_date_optional_time||epoch_millis"
             },
             "eligible_for_referral": {
-                "type": "bool11ean"
+                "type": "boolean"
             },
             "is_staffing_employee": {
                 "type": "boolean"

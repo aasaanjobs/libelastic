@@ -14,7 +14,7 @@ class LoadElasticData(AppConfig):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.es = Elasticsearch(settings.ELASTIC_HOST_DETAILS)
+        self.es = Elasticsearch(settings.LIB_ELASTIC['HOST'])
         self.index_mapping_in_elastic_server = {}
         self.index_mapping_in_application = {}
         self.ignored_filed = ['format']
@@ -23,25 +23,29 @@ class LoadElasticData(AppConfig):
         try:
             print("----------------------------------------------------------------------------------")
             elastic_index_details = settings.ELASTIC_MAPPING_DETAILS
-            for index_details in elastic_index_details:
-                mapping_file = settings.BASE_DIR + index_details['mapping_file']
+            index = settings.LIB_ELASTIC
+            for key, value in index['INDICES'].items():
+                print(value['mapping_file'])
+                print(index['ENV'] + "_" + value['index_prefix'])
+            #for index_details in elastic_index_details:
+                mapping_file = settings.BASE_DIR + value['mapping_file']
 
                 # loading mapping details from elastic server
-                server_mapping = self.es.indices.get_mapping(index=index_details['alias'])
+                server_mapping = self.es.indices.get_mapping(index=value['index_prefix'] + "_" + index['ENV'])
                 for key in server_mapping.keys():
                     index_prop = server_mapping.get(key)
                     mapping_details = index_prop.get('mappings')
-                    index_data = mapping_details.get(index_details['doc_type'])
+                    index_data = mapping_details.get(value['doc_type'])
                     properties_data = index_data.get('properties')
                     self.index_mapping_in_elastic_server = properties_data
 
                 # loading mapping details from local mapping file
                 with open(mapping_file, 'r') as fp:
                     application_mapping_details = json.load(fp)
-                    self.index_mapping_in_application = application_mapping_details.get(index_details['doc_type']).get('properties')
-                self.compare_mapping(index_details)
+                    self.index_mapping_in_application = application_mapping_details.get(value['doc_type']).get('properties')
+                self.compare_mapping(value)
         except Exception as ex:
-            print('\033[91m'+"found exception ", ex + '\033[0m')
+            print("found exception ", ex)
             print("\n")
         print("----------------------------------------------------------------------------------")
 
@@ -55,9 +59,9 @@ class LoadElasticData(AppConfig):
                 z1 = z1 and self.check_mapping(first_level_value_in_application, first_level_value_in_elastic)
 
         if not z1:
-            print('\033[91m'+"found mismatch of index mapping in local and server ::  ", index_details['alias']+'\033[0m')
+            print('\033[91m'+"found mismatch of index mapping in local and server ::  ", index_details['index_prefix']+'\033[0m')
         else:
-            print('\033[92m'+"Everything is fine !!!!!!!  for  :  ", index_details['alias']+'\033[0m')
+            print('\033[92m'+"Everything is fine !!!!!!!  for  :  ", index_details['index_prefix']+'\033[0m')
 
     def check_mapping(self, d1, d2):
         if 'dynamic' in d1.keys():
