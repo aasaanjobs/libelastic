@@ -6,7 +6,7 @@ README = open(os.path.join(here, 'README.rst')).read()
 
 setup(
     name='libelastic',
-    version='0.1',
+    version='1.1',
     packages=['elastic_mapper'],
     description='A line of description',
     long_description=README,
