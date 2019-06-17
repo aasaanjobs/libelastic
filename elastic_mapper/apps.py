@@ -8,10 +8,6 @@ from elasticsearch import Elasticsearch
 class ElasticMapperConfig(AppConfig):
     name = 'elastic_mapper'
 
-
-class LoadElasticData(AppConfig):
-    name = 'elastic_mapper'
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.es = Elasticsearch(settings.LIB_ELASTIC['HOST'])
@@ -22,12 +18,10 @@ class LoadElasticData(AppConfig):
     def ready(self):
         try:
             print("----------------------------------------------------------------------------------")
-            elastic_index_details = settings.ELASTIC_MAPPING_DETAILS
             index = settings.LIB_ELASTIC
             for key, value in index['INDICES'].items():
                 print(value['mapping_file'])
                 print(index['ENV'] + "_" + value['index_prefix'])
-            #for index_details in elastic_index_details:
                 mapping_file = settings.BASE_DIR + value['mapping_file']
 
                 # loading mapping details from elastic server
