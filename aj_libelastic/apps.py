@@ -6,7 +6,7 @@ from elasticsearch import Elasticsearch
 
 
 class ElasticMapperConfig(AppConfig):
-    name = 'elastic_mapper'
+    name = 'aj_libelastic'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

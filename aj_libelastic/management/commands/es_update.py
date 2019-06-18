@@ -11,17 +11,9 @@ from django.conf import settings
 from elasticsearch import Elasticsearch, TransportError, NotFoundError
 from elasticsearch.exceptions import ConnectionError as ElasticConnectionError
 
-#from core.elastic.tranform_script import transform_func
-#from core.utils.custom_print import print_info, print_success, print_fail, print_warn
-#from core.constants import ELASTIC_INDICES
-
 logger = logging.getLogger('threaded_logger')
 
-elastic_module = importlib.import_module('core.constants.constants')
-ELASTIC_INDICES = elastic_module.ELASTIC_INDICES
-transform_module = importlib.import_module('core.elastic.tranform_script')
-transform_func = transform_module.transform_func
-print_module = importlib.import_module('core.utils.custom_print')
+print_module = importlib.import_module(settings.LIB_ELASTIC['custom_print_path'])
 print_info = print_module.print_info
 print_success = print_module.print_success
 print_fail = print_module.print_fail
@@ -46,8 +38,8 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.es = Elasticsearch(settings.ES_HOST)
-        self.env = settings.ES_ENV
+        self.es = Elasticsearch(settings.LIB_ELASTIC['HOST'])
+        self.env = settings.LIB_ELASTIC['ENV']
         self.data_type = None
         self.threads_count = 1
         self.doc_count = 0
@@ -57,16 +49,17 @@ class Command(BaseCommand):
         parser.add_argument('args1')
 
     def get_index_type(self):
-        return ELASTIC_INDICES[self.data_type].get("type")
+        return settings.LIB_ELASTIC['INDICES'][self.data_type].get("doc_type")
 
     def get_index_alias(self):
-        return ELASTIC_INDICES[self.data_type].get("index")
+        return "".join([settings.LIB_ELASTIC['INDICES'][self.data_type].get('index_prefix'),
+                        settings.LIB_ELASTIC['ENV']])
 
     def has_parent(self, data_type=None):
         if data_type:
-            parent = ELASTIC_INDICES[data_type].get("parent")
+            parent = settings.LIB_ELASTIC['INDICES'][data_type].get('parent')
         else:
-            parent = ELASTIC_INDICES[self.data_type].get("parent")
+            parent = settings.LIB_ELASTIC['INDICES'][self.data_type].get('parent')
         if parent:
             return True
         else:
@@ -74,7 +67,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def get_data_type(index_type):
-        for key, value in ELASTIC_INDICES.items():
+        for key, value in settings.LIB_ELASTIC['INDICES'].items():
             if value["type"] == index_type:
                 return key
         raise AttributeError("Failed to find Data Type for index type: %s" % index_type)
@@ -82,9 +75,9 @@ class Command(BaseCommand):
     def get_parent_attr(self, data_type=None):
         if self.has_parent(data_type=data_type):
             if data_type:
-                return ELASTIC_INDICES[data_type].get("parent")
+                return settings.LIB_ELASTIC['INDICES'][data_type].get('parent')
             else:
-                return ELASTIC_INDICES[self.data_type].get("parent")
+                return settings.LIB_ELASTIC['INDICES'][self.data_type].get('parent')
         else:
             raise AttributeError("Data type has no parent!")
 
@@ -112,7 +105,8 @@ class Command(BaseCommand):
         return list(res[index]['mappings'].keys())
 
     def __get_mapping(self, index_type):
-        mapping_file = "%s/%s" % (settings.BASE_DIR, "core/elastic/mappings/" + index_type + ".json")
+        mapping_file = "%s/%s" % (
+        settings.BASE_DIR, settings.LIB_ELASTIC['INDICES'][self.data_type].get('mapping_file'))
         fp = open(mapping_file, 'r')
         data_mapping = json.load(fp)
         fp.close()
@@ -123,10 +117,11 @@ class Command(BaseCommand):
         Initialises the index with timestamp while creating a new index
         :return:
         """
-        if ELASTIC_INDICES.get(self.data_type) is None:
+        if settings.LIB_ELASTIC['INDICES'][self.data_type] is None:
             raise NotImplementedError("No such index type (%s) is supported right now." % self.data_type)
         epoch_now = int(time.time())
-        alias = ELASTIC_INDICES[self.data_type].get("index")
+        alias = "".join([settings.LIB_ELASTIC['INDICES'][self.data_type].get('index_prefix'),
+                        settings.LIB_ELASTIC['ENV']])
         new_index = "_".join([alias, str(epoch_now)])
         return new_index
 
@@ -176,8 +171,10 @@ class Command(BaseCommand):
         :return:
         """
         # Initialize the settings file location
-        file_identifier = ELASTIC_INDICES[self.data_type].get("parent_doc_type", self.get_index_type())
-        setting_file = "%s/%s" % (settings.BASE_DIR, "core/elastic/settings/" + file_identifier + ".json")
+        file_identifier = settings.LIB_ELASTIC['INDICES'][self.data_type].get('parent_doc_type', self.get_index_type())
+        setting_file = "%s/%s" % (settings.BASE_DIR,
+                                  settings.LIB_ELASTIC['INDICES'][self.data_type].get('setting_file_dir')
+                                  + file_identifier + ".json")
         if not os.path.isfile(setting_file):
             print_warn("Found no settings file for " + self.get_index_type() + ". Skipping...")
             return True
@@ -214,7 +211,7 @@ class Command(BaseCommand):
         :return:
         """
         # Initialize the mapping file location
-        mapping_file = "%s/%s" % (settings.BASE_DIR, "core/elastic/mappings/" + self.get_index_type() + ".json")
+        mapping_file = "%s/%s" % (settings.BASE_DIR, settings.LIB_ELASTIC['INDICES'][self.data_type].get('mapping_file'))
         if not os.path.isfile(mapping_file):
             print_fail("Failed to find mapping file %s" % mapping_file)
             return False
@@ -260,7 +257,10 @@ class Command(BaseCommand):
         :return:
         """
         try:
-            return ELASTIC_INDICES[self.data_type].get("list_pg_func")(offset=offset, limit=limit)
+            module = __import__(settings.LIB_ELASTIC['INDICES'][self.data_type].get('pg_func_path'))
+            list_candidate_data = getattr(module,
+                                          settings.LIB_ELASTIC['INDICES'][self.data_type].get('list_pg_func'))
+            return list_candidate_data(offset=offset, limit=limit)
         except KeyError:
             raise NotImplementedError("No such index type (%s) is supported right now." % self.data_type)
 
@@ -277,7 +277,7 @@ class Command(BaseCommand):
         while True:
             try:
                 res = self.es.scroll(scroll_id=scroll_id, scroll="2m")
-                scroll_id = res["_scroll_id"]                           # This is the next scroll ID
+                scroll_id = res["_scroll_id"]  # This is the next scroll ID
                 bulk_data = []
                 for hit in res["hits"]["hits"]:
                     content = {
@@ -289,9 +289,12 @@ class Command(BaseCommand):
                     }
                     if self.has_parent(data_type=self.get_data_type(index_type)):
                         content["index"]["parent"] = hit["_source"][self.get_parent_attr(
-                                self.get_data_type(index_type))]
+                            self.get_data_type(index_type))]
                     bulk_data.append(ujson.dumps(content))
                     if transform:
+                        transform_module = importlib.import_module(
+                            settings.LIB_ELASTIC['INDICES'][self.data_type].get('transform_func'))
+                        transform_func = transform_module.transform_func
                         transformed_data = transform_func(hit["_source"], type=index_type)
                         bulk_data.append(ujson.dumps(transformed_data))
                     else:
@@ -346,7 +349,7 @@ class Command(BaseCommand):
             if not res:
                 print_fail("Failed to put mapping for type: " + index_type)
                 return False
-            query = {"query": {"match_all": {}}, "size": bulk_size/2}
+            query = {"query": {"match_all": {}}, "size": bulk_size / 2}
             scan_res = self.es.search(index=self.get_index_alias(), doc_type=index_type, body=query,
                                       scroll="2m")
             if not self.__scroll_and_copy(new_index=new_index, index_type=index_type, scroll_id=scan_res["_scroll_id"],
@@ -355,7 +358,7 @@ class Command(BaseCommand):
         return True
 
     def __copy_index_type(self, new_index, doc_type, transform=False, bulk_size=100):
-        query = {"query": {"match_all": {}}, "size": bulk_size/2}
+        query = {"query": {"match_all": {}}, "size": bulk_size / 2}
         scan_res = self.es.search(index=self.get_index_alias(), doc_type=doc_type, body=query,
                                   scroll="2m")
         if not self.__scroll_and_copy(new_index=new_index, index_type=doc_type, scroll_id=scan_res["_scroll_id"],
@@ -375,7 +378,8 @@ class Command(BaseCommand):
 
             for i in range(self.threads_count):
                 t = threading.Thread(name='Thread-' + str(i), target=lambda response, arg1:
-                response.append(self.__indexing(arg1, bulk_size, bulk_size*i, bulk_size*(i+1))), args=(response, new_index), daemon=True)
+                response.append(self.__indexing(arg1, bulk_size, bulk_size * i, bulk_size * (i + 1))),
+                                     args=(response, new_index), daemon=True)
                 threads.append(t)
                 t.start()
             # joining thread!! so that main thread can wait till other threads get finished
@@ -402,7 +406,7 @@ class Command(BaseCommand):
         while True:
             current_offset = starting_offset + iteration * bulk_size
 
-            #Managing Offset on basis of round-robin for each thread
+            # Managing Offset on basis of round-robin for each thread
             if self.threads_count > 1:
                 current_offset = starting_offset + (iteration * self.threads_count * bulk_size)
                 end_offset = last_offset + (iteration * self.threads_count * bulk_size)
@@ -411,7 +415,8 @@ class Command(BaseCommand):
             if self.doc_count == 0:
                 self.doc_count = 1e+15
             if self.doc_count - current_offset > 0:
-                objects = self.__get_data_objects(offset=current_offset, limit=min(bulk_size, self.doc_count - current_offset))
+                objects = self.__get_data_objects(offset=current_offset,
+                                                  limit=min(bulk_size, self.doc_count - current_offset))
             else:
                 break
 
@@ -434,7 +439,7 @@ class Command(BaseCommand):
                         "index": {
                             "_index": new_index,
                             "_type": self.get_index_type(),
-                            "_id": str(obj["id"]+str(repetition+1))
+                            "_id": str(obj["id"] + str(repetition + 1))
                         }
                     }
                     if self.has_parent():
@@ -446,7 +451,7 @@ class Command(BaseCommand):
             body = "\n".join(str(x) for x in bulk_data)
             res = self.es.bulk(body=body, request_timeout=45)
             if not res["errors"]:
-                logger.info("Finished iteration: %d with total documents: %d." % (iteration+1, doc_count))
+                logger.info("Finished iteration: %d with total documents: %d." % (iteration + 1, doc_count))
                 iteration += 1
             else:
                 epoch_now = int(time.time())
@@ -462,7 +467,12 @@ class Command(BaseCommand):
     def put_percolator_data(self, new_index):
         bulk_data = []
         try:
-            objects = ELASTIC_INDICES.get("Percolator").get("list_pg_func")()
+            objects = settings.LIB_ELASTIC['INDICES']['Percolator'].get("list_pg_func")()
+            module = __import__(settings.LIB_ELASTIC['INDICES'][self.data_type].get('pg_func_path'))
+            generate_percolate_list = getattr(module,
+                                              settings.LIB_ELASTIC['INDICES'][self.data_type].get(
+                                                  'list_pg_func'))
+            objects = generate_percolate_list()
             for obj in objects:
                 content = {
                     "index": {
@@ -505,7 +515,7 @@ class Command(BaseCommand):
             else:
                 bulk_size = 20
         except IndexError:
-            bulk_size = 20     # by default
+            bulk_size = 20  # by default
         try:
             no_of_threads = args_arr[2]
             if no_of_threads.isdigit():
@@ -513,7 +523,7 @@ class Command(BaseCommand):
                 doc_count = args_arr[3]
                 self.doc_count = int(doc_count)
         except IndexError:
-            pass     # by default threads_count = 1
+            pass  # by default threads_count = 1
         if command_name == 'force_index':
             # Create a new Index without the alias, will be setting the alias last.
             new_index = self.__init_index()
@@ -526,7 +536,7 @@ class Command(BaseCommand):
                             and self.__handle_other_types(new_index=new_index, bulk_size=bulk_size) \
                             and self.__handle_indexing_in_threads(new_index=new_index, bulk_size=bulk_size) \
                             and self.__set_alias(new_index=new_index):
-                        print_success("Indexing Completed in {0} seconds".format(str(time.time()-start_time)))
+                        print_success("Indexing Completed in {0} seconds".format(str(time.time() - start_time)))
                     else:
                         print_fail("Indexing Failed")
                         self.__delete_index(index=new_index)
@@ -537,7 +547,7 @@ class Command(BaseCommand):
                             and self.__set_alias(new_index=new_index):
                         if self.data_type == "Candidate":
                             self.put_percolator_data(new_index)
-                        print_success("Indexing Completed in {0} seconds".format(str(time.time()-start_time)))
+                        print_success("Indexing Completed in {0} seconds".format(str(time.time() - start_time)))
                     else:
                         print_fail("Indexing Failed")
                         self.__delete_index(index=new_index)
@@ -561,7 +571,7 @@ class Command(BaseCommand):
                             and self.__copy_index_type(new_index=new_index, doc_type=self.get_index_type(),
                                                        transform=transform, bulk_size=bulk_size) \
                             and self.__set_alias(new_index=new_index):
-                        print_success("Indexing Completed in {0} seconds".format(str(time.time()-start_time)))
+                        print_success("Indexing Completed in {0} seconds".format(str(time.time() - start_time)))
                     else:
                         print_fail("Indexing Failed")
                         self.__delete_index(index=new_index)
@@ -573,7 +583,7 @@ class Command(BaseCommand):
                             and self.__set_alias(new_index=new_index):
                         if self.data_type == "Candidate":
                             self.put_percolator_data(new_index)
-                        print_success("Indexing Completed in {0} seconds".format(str(time.time()-start_time)))
+                        print_success("Indexing Completed in {0} seconds".format(str(time.time() - start_time)))
                     else:
                         print_fail("Indexing Failed")
                         self.__delete_index(index=new_index)

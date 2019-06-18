@@ -1,13 +1,13 @@
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 
 setup(
     name='libelastic',
-    version='4.6',
-    packages=['elastic_mapper'],
+    version='5.0',
+    packages=find_packages(),
     description='A line of description',
     long_description=README,
     author='yourname',
