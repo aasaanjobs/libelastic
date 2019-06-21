@@ -1,7 +1,8 @@
 # libelastic
 Elasticsearch library and utils used by microservices in Aasaanjobs
 
-Add 'aj_libelastic' as a app in INSTALLED_APP or INSTALLED_APP_CUSTOM
+Add 'aj_libelastic' as a app in INSTALLED_APP or INSTALLED_APP_CUSTOM.
+
 Under the main settings add the below snippet:
 
 ```
