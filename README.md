@@ -1,7 +1,10 @@
 # libelastic
 Elasticsearch library and utils used by microservices in Aasaanjobs
 
+Add 'aj_libelastic' as a app in INSTALLED_APP or INSTALLED_APP_CUSTOM
 Under the main settings add the below snippet:
+
+```
 LIB_ELASTIC = {
     'HOST': 'http://localhost:9200',
     'ENV': 'local',
@@ -21,3 +24,4 @@ LIB_ELASTIC = {
         }
     }
 }
+```
